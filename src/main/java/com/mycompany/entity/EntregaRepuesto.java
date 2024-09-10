@@ -8,7 +8,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +25,8 @@ import javax.persistence.Table;
 @Table(name = "entrega_repuesto")
 @NamedQueries({
     @NamedQuery(name = "EntregaRepuesto.findAll", query = "SELECT e FROM EntregaRepuesto e"),
-    @NamedQuery(name = "EntregaRepuesto.findByIdentregaRepuesto", query = "SELECT e FROM EntregaRepuesto e WHERE e.identregaRepuesto = :identregaRepuesto")})
+    @NamedQuery(name = "EntregaRepuesto.findByIdentregaRepuesto", query = "SELECT e FROM EntregaRepuesto e WHERE e.identregaRepuesto = :identregaRepuesto"),
+    @NamedQuery(name = "EntregaRepuesto.findByIdentrega", query = "SELECT e FROM EntregaRepuesto e WHERE e.entregaIdentrega = :entregaIdentrega")})
 public class EntregaRepuesto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,10 +36,10 @@ public class EntregaRepuesto implements Serializable {
     @Column(name = "identrega_repuesto")
     private Integer identregaRepuesto;
     @JoinColumn(name = "entrega_identrega", referencedColumnName = "identrega")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Entrega entregaIdentrega;
     @JoinColumn(name = "Repuestos_idRepuestos", referencedColumnName = "idRepuestos")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Repuestos repuestosidRepuestos;
 
     public EntregaRepuesto() {
@@ -97,5 +97,5 @@ public class EntregaRepuesto implements Serializable {
     public String toString() {
         return "com.mycompany.entity.EntregaRepuesto[ identregaRepuesto=" + identregaRepuesto + " ]";
     }
-    
+
 }

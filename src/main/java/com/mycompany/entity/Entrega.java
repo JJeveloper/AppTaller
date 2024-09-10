@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,13 +51,13 @@ public class Entrega implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private BigDecimal total;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entregaIdentrega", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entregaIdentrega")
     private List<EntregaRepuesto> entregaRepuestoList;
     @JoinColumn(name = "producto_idproducto", referencedColumnName = "idproducto")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Producto productoIdproducto;
     @JoinColumn(name = "servicio_idservicio", referencedColumnName = "idservicio")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Servicio servicioIdservicio;
 
     public Entrega() {

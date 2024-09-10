@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -29,7 +30,11 @@ public class ProductoJpaController implements Serializable {
     public ProductoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_AppTaller_jar_1.0-SNAPSHOTPU");
+
+    public ProductoJpaController() {
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -256,5 +261,5 @@ public class ProductoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

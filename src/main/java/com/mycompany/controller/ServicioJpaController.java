@@ -6,7 +6,6 @@ package com.mycompany.controller;
 
 import com.mycompany.controller.exceptions.IllegalOrphanException;
 import com.mycompany.controller.exceptions.NonexistentEntityException;
-import com.mycompany.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -28,13 +28,17 @@ public class ServicioJpaController implements Serializable {
     public ServicioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_AppTaller_jar_1.0-SNAPSHOTPU");
+
+    public ServicioJpaController() {
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Servicio servicio) throws PreexistingEntityException, Exception {
+    public void create(Servicio servicio) {
         if (servicio.getEntregaList() == null) {
             servicio.setEntregaList(new ArrayList<Entrega>());
         }
@@ -59,11 +63,6 @@ public class ServicioJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findServicio(servicio.getIdservicio()) != null) {
-                throw new PreexistingEntityException("Servicio " + servicio + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -204,5 +203,5 @@ public class ServicioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

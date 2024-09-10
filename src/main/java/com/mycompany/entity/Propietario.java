@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +47,7 @@ public class Propietario implements Serializable {
     @Basic(optional = false)
     @Column(name = "telefono")
     private String telefono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "propietarioIdpropietario", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "propietarioIdpropietario")
     private List<Producto> productoList;
 
     public Propietario() {
@@ -127,7 +126,7 @@ public class Propietario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.entity.Propietario[ idpropietario=" + idpropietario + " ]";
+        return cedula + " " + nombres;
     }
-    
+
 }

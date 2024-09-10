@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,9 +39,9 @@ public class Marca implements Serializable {
     @Basic(optional = false)
     @Column(name = "marca")
     private String marca;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaIdmarca", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaIdmarca")
     private List<Repuestos> repuestosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaIdmarca", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marcaIdmarca")
     private List<Producto> productoList;
 
     public Marca() {
@@ -111,7 +110,7 @@ public class Marca implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.entity.Marca[ idmarca=" + idmarca + " ]";
+        return marca;
     }
     
 }

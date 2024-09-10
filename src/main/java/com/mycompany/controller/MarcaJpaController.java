@@ -18,6 +18,7 @@ import java.util.List;
 import com.mycompany.entity.Producto;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -28,7 +29,11 @@ public class MarcaJpaController implements Serializable {
     public MarcaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_AppTaller_jar_1.0-SNAPSHOTPU");
+
+    public MarcaJpaController() {
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -252,5 +257,5 @@ public class MarcaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

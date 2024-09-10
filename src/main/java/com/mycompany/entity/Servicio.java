@@ -5,12 +5,14 @@
 package com.mycompany.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,18 +28,24 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s"),
     @NamedQuery(name = "Servicio.findByIdservicio", query = "SELECT s FROM Servicio s WHERE s.idservicio = :idservicio"),
-    @NamedQuery(name = "Servicio.findByServicio", query = "SELECT s FROM Servicio s WHERE s.servicio = :servicio")})
+    @NamedQuery(name = "Servicio.findByServicio", query = "SELECT s FROM Servicio s WHERE s.servicio = :servicio"),
+    @NamedQuery(name = "Servicio.findByPrecio", query = "SELECT s FROM Servicio s WHERE s.precio = :precio")})
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idservicio")
     private Integer idservicio;
     @Basic(optional = false)
     @Column(name = "servicio")
     private String servicio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdservicio", fetch = FetchType.LAZY)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @Column(name = "precio")
+    private BigDecimal precio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdservicio")
     private List<Entrega> entregaList;
 
     public Servicio() {
@@ -47,9 +55,10 @@ public class Servicio implements Serializable {
         this.idservicio = idservicio;
     }
 
-    public Servicio(Integer idservicio, String servicio) {
+    public Servicio(Integer idservicio, String servicio, BigDecimal precio) {
         this.idservicio = idservicio;
         this.servicio = servicio;
+        this.precio = precio;
     }
 
     public Integer getIdservicio() {
@@ -66,6 +75,14 @@ public class Servicio implements Serializable {
 
     public void setServicio(String servicio) {
         this.servicio = servicio;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public List<Entrega> getEntregaList() {

@@ -11,11 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,8 +35,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Producto.findByIdproducto", query = "SELECT p FROM Producto p WHERE p.idproducto = :idproducto"),
     @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Producto.findByFecharecibo", query = "SELECT p FROM Producto p WHERE p.fecharecibo = :fecharecibo"),
-    @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado"),
-    @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion")})
+    @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,21 +49,22 @@ public class Producto implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @Column(name = "fecharecibo")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecharecibo;
     @Basic(optional = false)
     @Column(name = "estado")
-    private String estado;
+    private Character estado;
     @Basic(optional = false)
+    @Lob
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoIdproducto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoIdproducto")
     private List<Entrega> entregaList;
     @JoinColumn(name = "marca_idmarca", referencedColumnName = "idmarca")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Marca marcaIdmarca;
     @JoinColumn(name = "propietario_idpropietario", referencedColumnName = "idpropietario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Propietario propietarioIdpropietario;
 
     public Producto() {
@@ -74,7 +74,7 @@ public class Producto implements Serializable {
         this.idproducto = idproducto;
     }
 
-    public Producto(Integer idproducto, String nombre, Date fecharecibo, String estado, String descripcion) {
+    public Producto(Integer idproducto, String nombre, Date fecharecibo, Character estado, String descripcion) {
         this.idproducto = idproducto;
         this.nombre = nombre;
         this.fecharecibo = fecharecibo;
@@ -106,11 +106,11 @@ public class Producto implements Serializable {
         this.fecharecibo = fecharecibo;
     }
 
-    public String getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 

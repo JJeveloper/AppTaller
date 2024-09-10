@@ -4,6 +4,8 @@
 
 package com.mycompany.apptaller;
 
+import java.util.Date;
+
 /**
  *
  * @author JJAB
@@ -11,6 +13,6 @@ package com.mycompany.apptaller;
 public class AppTaller {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
+        System.out.println("date" +new Date());
+    }  
 }
